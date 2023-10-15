@@ -1,0 +1,52 @@
+let posts = [];
+let lastActivityTime = null;
+
+function createPost(post) {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      posts.push(post);
+      resolve(post);
+    }, 1000);
+  });
+}
+
+function updateLastUserActivityTime() {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      lastActivityTime = new Date();
+      resolve(lastActivityTime);
+    }, 1000); 
+  });
+}
+
+function deletePost() {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      const deletedPost = posts.pop();
+      resolve(deletedPost);
+    }, 1000);
+  });
+}
+
+async function main() {
+  try {
+    await createPost({ title: "Post 1" });
+    await updateLastUserActivityTime();
+
+    console.log("All posts:", posts);
+    console.log("Last Activity Time:", lastActivityTime);
+
+    const deletedPost = await deletePost();
+    console.log("Remaining Posts:", posts);
+  } catch (error) {
+    console.error("An error occurred:", error);
+  }
+}
+
+main();
+
+
+
+
+
+
