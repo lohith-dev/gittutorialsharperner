@@ -120,6 +120,35 @@ const parentDiv = document.getElementById('UserData');
             })
 
             getItem();
+
+            var itemListele = document.getElementById('UserData');
+
+            itemListele.addEventListener('click', removeItem);
+
+            async function  removeItem(e){
+                        if(e.target.classList.contains('delete')){
+                            if(confirm('Are You Sure?')){
+                                const listItem = e.target.closest('li');
+                                 const itemId = listItem.getAttribute('data-id');
+                                 const elementToRemove = document.querySelector(`li[data-id="${itemId}"]`);
+                                // const parts = li.split('-');
+                                console.log(itemId);
+                                // localStorage.removeItem(parts[1]);
+                                // itemList.removeChild(list);
+                                try{
+                                    var data = await axios.delete(`https://crudcrud.com/api/36cdd06af49647258ecfe243d96b6152/appointmentData/${itemId}`);
+                                    console.log(data);
+                                    if(data.status==200){
+                                        elementToRemove.remove();
+                                    }
+                                }catch(error){
+                                    console.log(error)
+                                }
+                              
+                                  
+                            }
+                        }
+                    }
         }
 
        async function handleSubmit(event) {
@@ -151,7 +180,7 @@ const parentDiv = document.getElementById('UserData');
                     
                 try{
                         var postdata=await axios.post('https://crudcrud.com/api/36cdd06af49647258ecfe243d96b6152/appointmentData',data);
-                        console.log(postdata)
+                       
                         if(postdata){
                             addIteme(postdata.data);
                         }
