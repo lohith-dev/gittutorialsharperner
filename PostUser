@@ -47,6 +47,7 @@
     <script>
 
     async function getItem(){
+        
             try{
                       var result = await axios.get('https://crudcrud.com/api/36cdd06af49647258ecfe243d96b6152/appointmentData');
                 if(result){
@@ -108,9 +109,44 @@ const parentDiv = document.getElementById('UserData');
 
 }
 
+var edititemItem=(itemId,data)=>{
+    const tobeEdited = document.querySelector(`li[data-id="${itemId}"]`);
+   
+    tobeEdited.textContent = `${data.name}-${data.email}-${data.phone}`;
+    // elementToRemove.remove();
+    var deleteBtn = document.createElement('button');
+    deleteBtn.className  = 'btn btn-danger btn-sm float-right delete';
+    deleteBtn.appendChild(document.createTextNode('Delete'));
+
+    var editBtn = document.createElement('button');
+    editBtn.className  = 'btn btn-success btn-sm float-right edit';
+    editBtn.appendChild(document.createTextNode('Edit'));
+
+    tobeEdited.appendChild(editBtn);
+
+    tobeEdited.appendChild(deleteBtn);
+}
+            function populateInputFields(editData) {
+                    // const userData = JSON.parse(localStorage.getItem(productNamepart));
+                     // console.log(userData);
+                    //  Check if data exists
+                    if (editData) {
+                     // Populate input fields
+                        document.getElementById('name').value = editData.name;
+                        document.getElementById('email').value = editData.email;
+                        document.getElementById('phone').value=editData.phone;
+
+
+                       const editItemIdInput = document.getElementById('editItemId');
+                       editItemIdInput.value = editData._id;
+                    }
+                }
+
         window.onload =()=>{
             const form =document.querySelector("form");
             const buton =document.querySelector("subut");
+
+            
 
             form.addEventListener('submit', e=>{
                 if(!form.checkValidity()){
@@ -124,6 +160,7 @@ const parentDiv = document.getElementById('UserData');
             var itemListele = document.getElementById('UserData');
 
             itemListele.addEventListener('click', removeItem);
+            itemListele.addEventListener('click', editItem);
 
             async function  removeItem(e){
                         if(e.target.classList.contains('delete')){
@@ -137,7 +174,7 @@ const parentDiv = document.getElementById('UserData');
                                 // itemList.removeChild(list);
                                 try{
                                     var data = await axios.delete(`https://crudcrud.com/api/36cdd06af49647258ecfe243d96b6152/appointmentData/${itemId}`);
-                                    console.log(data);
+                                    // console.log(data);
                                     if(data.status==200){
                                         elementToRemove.remove();
                                     }
@@ -149,6 +186,29 @@ const parentDiv = document.getElementById('UserData');
                             }
                         }
                     }
+
+                    async function editItem(e){
+                    if(e.target.classList.contains('edit')){
+                        const listItem = e.target.closest('li');
+                        const itemId = listItem.getAttribute('data-id');
+                        let edit=null;
+
+                        try{
+                            var data = await axios.get('https://crudcrud.com/api/36cdd06af49647258ecfe243d96b6152/appointmentData');
+                            if(data){
+                                edit=data.data.find(data=>data._id===itemId);
+                                console.log(edit);
+                                populateInputFields(edit);
+                            }
+
+                        }catch(error){
+                            console.log(error);
+                        }
+  
+                        // localStorage.removeItem(parts[1]);
+                        // itemList.removeChild(list);
+                    }
+                }
         }
 
        async function handleSubmit(event) {
@@ -157,22 +217,23 @@ const parentDiv = document.getElementById('UserData');
             const name = document.getElementById('name').value;
             const email = document.getElementById('email').value;
             const phone = document.getElementById('phone').value;
-
+            const editItemId = document.getElementById('editItemId').value;
             const data = {
                name  : name,
                email : email,
                phone : phone,
             }
             
-                if(false){
+                if(editItemId){
                     try{
                         var editdata = await axios.put(`https://crudcrud.com/api/36cdd06af49647258ecfe243d96b6152/appointmentData/${editItemId}`,data);
-                        if(data){
-                            getItem();
+                        console.log(editdata)
+                        if(editdata.status==200){
+                            edititemItem(editItemId,data);
                         }
 
                     }catch(error){
-                        console.log(err);
+                        console.log(error);
                     }
                 
                     
@@ -217,7 +278,8 @@ const parentDiv = document.getElementById('UserData');
             <div class="invalid-feedback">Invalid Phone Number</div>
             <div class="form-text">Please enter a 10-digit phone number (numbers only).</div>
           </div>
-        
+
+          <input type="hidden" id="editItemId" name="editItemId">
           
           <!-- <div class="col-12 mt-3">
             <label for="fname"  class="form-label" >Time for Call:</label>
