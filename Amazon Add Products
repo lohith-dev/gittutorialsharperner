@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.min.js"></script>
+      <style>
+            #formcomp {
+                display: flex;
+                justify-content: center; 
+              
+            }
+            #header{
+                text-align: center;
+            }
+            h1{
+                color: orange;
+                font-family: Arial, Helvetica, sans-serif;
+                font-weight: bold;
+            }
+            #sub-button{
+                margin-top: 15px;
+                border-radius: 5px;
+                background-color: orange;
+                padding: 8px;
+               
+            }
+            .buton{
+                text-align: center;
+            }
+            form{
+                padding: 40px;
+                margin: auto;
+                width: 450px;
+                border: 1px solid orange;
+            }
+            #time{
+                display: flex;
+                margin-top: 8px;
+                justify-content: space-between;
+            }
+            label{
+                color: black;
+            }
+       </style>
+    </head>
+<body>
+    <script>
+
+ 
+ 
+    
+
+                var addIteme=(resData)=>{
+        
+                            const eleDiv = document.getElementById('electronicDiv');
+                            const skinDiv = document.getElementById('skinDiv');
+                            const foodDiv = document.getElementById('foodDiv');
+
+                            if(resData.cat==="Electronics"){
+                                const childParagraph = document.createElement('li');
+                                childParagraph.setAttribute('data-id', resData._id);
+
+                                childParagraph.textContent = `${resData.price}-${resData.cat}-${resData.productName}`;
+                                eleDiv.appendChild(childParagraph);
+                                var deleteBtn = document.createElement('button');
+                                deleteBtn.className  = 'btn btn-danger btn-sm float-right delete';
+                                deleteBtn.appendChild(document.createTextNode('Delete'));
+
+                                var editBtn = document.createElement('button');
+                                    editBtn.className  = 'btn btn-success btn-sm float-right edit';
+                                    editBtn.appendChild(document.createTextNode('Edit'));
+
+                                childParagraph.appendChild(editBtn);
+
+                                childParagraph.appendChild(deleteBtn);
+
+
+                            }else if(resData.cat==="Food"){
+                                const childParagraph = document.createElement('li');
+                                childParagraph.setAttribute('data-id', resData._id);
+
+                                childParagraph.textContent = `${resData.price}-${resData.cat}-${resData.productName}`;
+                                foodDiv.appendChild(childParagraph);
+                                var deleteBtn = document.createElement('button');
+                                deleteBtn.className  = 'btn btn-danger btn-sm float-right delete';
+                                deleteBtn.appendChild(document.createTextNode('Delete'));
+
+                                var editBtn = document.createElement('button');
+                                    editBtn.className  = 'btn btn-success btn-sm float-right edit';
+                                    editBtn.appendChild(document.createTextNode('Edit'));
+
+                                childParagraph.appendChild(editBtn);
+
+                                childParagraph.appendChild(deleteBtn);
+                            }else{
+                                const childParagraph = document.createElement('li');
+                                childParagraph.setAttribute('data-id', resData._id);
+
+                                childParagraph.textContent = `${resData.price}-${resData.cat}-${resData.productName}`;
+                                skinDiv.appendChild(childParagraph);
+                                var deleteBtn = document.createElement('button');
+                                deleteBtn.className  = 'btn btn-danger btn-sm float-right delete';
+                                deleteBtn.appendChild(document.createTextNode('Delete'));
+
+                                var editBtn = document.createElement('button');
+                                    editBtn.className  = 'btn btn-success btn-sm float-right edit';
+                                    editBtn.appendChild(document.createTextNode('Edit'));
+
+                                childParagraph.appendChild(editBtn);
+
+                                childParagraph.appendChild(deleteBtn);
+                            }
+                            
+    }
+
+        async function getItem(){
+            try{
+                      var result = await axios.get('https://crudcrud.com/api/42d42675342e42fe97dc900d2a01496b/products');
+                if(result){
+                    result.data.forEach((resData, index) => {
+                            // Create HTML elements to display each price
+                            // console.log(price)
+                            // removelist();
+
+                            const eleDiv = document.getElementById('electronicDiv');
+                            const skinDiv = document.getElementById('skinDiv');
+                            const foodDiv = document.getElementById('foodDiv');
+
+                            if(resData.cat==="Electronics"){
+                                const childParagraph = document.createElement('li');
+                                childParagraph.setAttribute('data-id', resData._id);
+
+                                childParagraph.textContent = `${resData.price}-${resData.cat}-${resData.productName}`;
+                                eleDiv.appendChild(childParagraph);
+                                var deleteBtn = document.createElement('button');
+                                deleteBtn.className  = 'btn btn-danger btn-sm float-right delete';
+                                deleteBtn.appendChild(document.createTextNode('Delete'));
+
+                                var editBtn = document.createElement('button');
+                                    editBtn.className  = 'btn btn-success btn-sm float-right edit';
+                                    editBtn.appendChild(document.createTextNode('Edit'));
+
+                                childParagraph.appendChild(editBtn);
+
+                                childParagraph.appendChild(deleteBtn);
+                            }else if(resData.cat==="Food"){
+                                const childParagraph = document.createElement('li');
+                                childParagraph.setAttribute('data-id', resData._id);
+
+                                childParagraph.textContent = `${resData.price}-${resData.cat}-${resData.productName}`;
+                                foodDiv.appendChild(childParagraph);
+                                var deleteBtn = document.createElement('button');
+                                deleteBtn.className  = 'btn btn-danger btn-sm float-right delete';
+                                deleteBtn.appendChild(document.createTextNode('Delete'));
+
+                                var editBtn = document.createElement('button');
+                                    editBtn.className  = 'btn btn-success btn-sm float-right edit';
+                                    editBtn.appendChild(document.createTextNode('Edit'));
+
+                                childParagraph.appendChild(editBtn);
+
+                                childParagraph.appendChild(deleteBtn);
+                            }else{
+                                const childParagraph = document.createElement('li');
+                                childParagraph.setAttribute('data-id', resData._id);
+
+                                childParagraph.textContent = `${resData.price}-${resData.cat}-${resData.productName}`;
+                                skinDiv.appendChild(childParagraph);
+                                var deleteBtn = document.createElement('button');
+                                deleteBtn.className  = 'btn btn-danger btn-sm float-right delete';
+                                deleteBtn.appendChild(document.createTextNode('Delete'));
+
+                                var editBtn = document.createElement('button');
+                                    editBtn.className  = 'btn btn-success btn-sm float-right edit';
+                                    editBtn.appendChild(document.createTextNode('Edit'));
+
+                                childParagraph.appendChild(editBtn);
+
+                                childParagraph.appendChild(deleteBtn);
+                            }
+                            
+                            
+                        });
+                }
+             
+                }catch(error){
+                    console.log(error);
+                }
+        }
+
+var edititemItem=(itemId,data)=>{
+    const tobeEdited = document.querySelector(`li[data-id="${itemId}"]`);
+
+    const editItemIdInput = document.getElementById('editItemId');
+    editItemIdInput.value = null;
+   
+    tobeEdited.textContent = `${data.price}-${data.productName}-${data.cat}`;
+    // elementToRemove.remove();
+    var deleteBtn = document.createElement('button');
+    deleteBtn.className  = 'btn btn-danger btn-sm float-right delete';
+    deleteBtn.appendChild(document.createTextNode('Delete'));
+
+    var editBtn = document.createElement('button');
+    editBtn.className  = 'btn btn-success btn-sm float-right edit';
+    editBtn.appendChild(document.createTextNode('Edit'));
+
+    tobeEdited.appendChild(editBtn);
+
+    tobeEdited.appendChild(deleteBtn);
+}
+        window.onload =async ()=>{
+            const form =document.querySelector("form");
+            const buton =document.querySelector("subut");
+
+            form.addEventListener('submit', e=>{
+                if(!form.checkValidity()){
+                    e.preventDefault()
+                }
+                form.classList.add('was-validated')
+            })
+
+             
+                getItem();
+                var itemListele = document.getElementById('electronicDiv');
+                var itemListskin = document.getElementById('skinDiv');
+                var itemListfood = document.getElementById('foodDiv');
+
+                itemListele.addEventListener('click', removeItem);
+                itemListskin.addEventListener('click', removeItem);
+                  
+                itemListfood.addEventListener('click', removeItem);
+
+                itemListele.addEventListener('click', editItem);
+                itemListskin.addEventListener('click', editItem);
+                  
+                itemListfood.addEventListener('click', editItem);
+
+                 async function  removeItem( e){
+                        if(e.target.classList.contains('delete')){
+                            if(confirm('Are You Sure?')){
+                                const listItem = e.target.closest('li');
+                                 const itemId = listItem.getAttribute('data-id');
+                                 const elementToRemove = document.querySelector(`li[data-id="${itemId}"]`);
+                                // const parts = li.split('-');
+                                console.log(itemId);
+                                // localStorage.removeItem(parts[1]);
+                                // itemList.removeChild(list);
+                                try{
+                                    var data = await axios.delete(`https://crudcrud.com/api/42d42675342e42fe97dc900d2a01496b/products/${itemId}`);
+                                    console.log(data);
+                                    if(data.status==200){
+                                        elementToRemove.remove();
+                                    }
+                                }catch(error){
+                                    console.log(error)
+                                }
+                              
+                                  
+                            }
+                        }
+                    }
+
+                 function populateInputFields(editData) {
+                    // const userData = JSON.parse(localStorage.getItem(productNamepart));
+                     // console.log(userData);
+                    //  Check if data exists
+                    if (editData) {
+                     // Populate input fields
+                        document.getElementById('price').value = editData.price;
+                        document.getElementById('productName').value = editData.productName;
+                        document.getElementById('categorySelect').value=editData.cat;
+                        // document.getElementById('seldate').value=editData.date;
+                        // document.getElementById('seltime').value=editData.time;
+
+                       const editItemIdInput = document.getElementById('editItemId');
+                       editItemIdInput.value = editData._id;
+                    }
+                }
+
+                async function editItem(e){
+                    if(e.target.classList.contains('edit')){
+                        const listItem = e.target.closest('li');
+                        const itemId = listItem.getAttribute('data-id');
+                        let edit=null;
+
+                        try{
+                            var data = await axios.get('https://crudcrud.com/api/42d42675342e42fe97dc900d2a01496b/products');
+                            if(data){
+                                edit=data.data.find(data=>data._id===itemId);
+                                console.log(edit);
+                                populateInputFields(edit);
+                            }
+
+                        }catch(error){
+                            console.log(error);
+                        }
+  
+                        // localStorage.removeItem(parts[1]);
+                        // itemList.removeChild(list);
+                    }
+                }
+
+               
+                
+}
+
+
+      async  function handleSubmit(event) {
+            event.preventDefault(); 
+
+            const price = document.getElementById('price').value;
+            const productName = document.getElementById('productName').value;
+            const category = document.getElementById('categorySelect').value;
+            const editItemId = document.getElementById('editItemId').value;
+            console.log(editItemId)
+
+            const data = {
+               price  : price,
+               productName : productName,
+               cat : category,
+            }
+
+            console.log(data);
+
+          
+            if(editItemId){
+                try{
+                    var editdata = await axios.put(`https://crudcrud.com/api/42d42675342e42fe97dc900d2a01496b/products/${editItemId}`,data);
+                    if(editdata.status==200){
+                        edititemItem(editItemId,data)
+                    }
+
+                }catch(error){
+                    console.log(err);
+                }
+               
+                
+            }else{
+                
+            try{
+                    var postdata=await axios.post('https://crudcrud.com/api/42d42675342e42fe97dc900d2a01496b/products',data);
+                    console.log(postdata)
+                     if(postdata){
+                        addIteme(postdata.data);
+                     }
+                
+            }catch(error){
+                console.log(error);
+            }
+                
+        }
+    }
+    </script>
+    <div class="container">
+       
+    <form novalidate onSubmit="handleSubmit(event)">
+
+       <div id="header">
+         <h1>Add Products</h1>
+       </div>
+          <div class="form-floating mt-3">
+            <input  type="number" id ="price"class="form-control" placeholder="Enter productName" required>
+            <label for="price" class="form-label">Selling Price</label>
+          </div>
+
+          <div class="form-floating mt-3">
+            <input type="text" class="form-control"  id ="productName" placeholder="Enter productName" required>
+            <label for="productName" class="form-label" >Product Name:</label>
+            <!-- <div class="invalid-feedback">Invalid productName</div> -->
+          </div>
+            
+          <div class="mt-3">
+            <select id="categorySelect" class="form-select p-3" aria-label="Default select example">
+                <option selected>Choose a Category</option>
+                <option value="Electronics">Electronics</option>
+                <option value="Food">Food</option>
+                <option value="Skin Care">Skin Care</option>
+              </select>
+          </div>
+          <input type="hidden" id="editItemId" name="editItemId">
+
+            <div class="buton">
+                <input type="submit" id ="sub-button" class="subut" value="Add Product">
+            </div>
+         
+    </form> 
+    <h1> Products</h1>
+   
+    <h1> Electronic Items</h1>
+    <div id="user">
+        <ul id="electronicDiv">
+
+        </ul>
+    </div>
+    <h1> Food Items</h1>
+    <div id="user">
+        <ul id="foodDiv">
+
+        </ul>
+    </div>
+    <h1> Skincare Items</h1>
+    <div id="user">
+        <ul id="skinDiv">
+
+        </ul>
+    </div>
+
+</div>
+</body>
+</html>
